@@ -71,7 +71,7 @@ export default async function ContactPage() {
             >
               Chat on WhatsApp &rarr;
             </a>
-            <p className="text-[11px] text-stone-500">Instant physician &amp; order chat</p>
+            <p className="text-[11px] text-stone-500">Instant Physician &amp; order chat</p>
           </div>
 
           <div className="ayur-card p-5 bg-white space-y-2">
