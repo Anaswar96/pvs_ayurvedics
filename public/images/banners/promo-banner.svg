@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="100%" height="100%">
+    <defs>
+      <linearGradient id="bannerBg" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#0F3D24" />
+        <stop offset="100%" stop-color="#072213" />
+      </linearGradient>
+    </defs>
+    <rect width="600" height="800" rx="20" fill="url(#bannerBg)"/>
+    
+    <!-- Botanical pattern overlay -->
+    <path d="M 0 0 C 150 100, 200 300, 100 450 C 50 350, 20 200, 0 0 Z" fill="#1B5E20" opacity="0.25"/>
+    <path d="M 400 800 C 350 650, 450 500, 600 450 L 600 800 Z" fill="#2E7D32" opacity="0.2"/>
+
+    <!-- Natural solutions composition -->
+    <g transform="translate(180, 480)">
+      <!-- Brass Mortar and Pestle with Fresh Herbs -->
+      <ellipse cx="120" cy="180" rx="110" ry="40" fill="#B8860B"/>
+      <ellipse cx="120" cy="170" rx="95" ry="32" fill="#5D4037"/>
+      <!-- Bottle behind mortar -->
+      <rect x="60" y="20" width="60" height="120" rx="10" fill="#2E7D32"/>
+      <rect x="75" y="0" width="30" height="25" rx="4" fill="#D7CCC8"/>
+      <!-- Herb Leaves -->
+      <path d="M 120 150 C 160 100, 190 140, 170 170 Z" fill="#81C784"/>
+      <path d="M 90 140 C 60 90, 40 130, 70 160 Z" fill="#A5D6A7"/>
+    </g>
+  </svg>

@@ -1,0 +1,65 @@
+[
+  {
+    "id": "8c3f9c94-7cbc-4ab7-9134-4fc968bc0f1f",
+    "title": "Natural Ingredients",
+    "subtitle": "Pure herbs & botanical extracts",
+    "icon_name": "Leaf",
+    "is_active": true,
+    "sort_order": 1,
+    "created_at": "2026-09-09T11:28:23.1394+00:00"
+  },
+  {
+    "id": "c9f8a94d-379d-4a43-900f-9baf36dbbbc7",
+    "title": "Trusted Ayurvedic Care",
+    "subtitle": "Centuries of herbal wisdom",
+    "icon_name": "ShieldCheck",
+    "is_active": true,
+    "sort_order": 2,
+    "created_at": "2026-09-09T11:28:23.1394+00:00"
+  },
+  {
+    "id": "204e9fb7-8a45-4c93-afdf-304ebefe2bb7",
+    "title": "Safe & Gentle",
+    "subtitle": "Carefully balanced formulations",
+    "icon_name": "HeartHandshake",
+    "is_active": true,
+    "sort_order": 3,
+    "created_at": "2026-09-09T11:28:23.1394+00:00"
+  },
+  {
+    "id": "0f1e77f4-a3f5-4079-8fc6-8590f035f4d6",
+    "title": "Manjeri, Malappuram",
+    "subtitle": "Accessible Kerala clinic",
+    "icon_name": "MapPin",
+    "is_active": true,
+    "sort_order": 4,
+    "created_at": "2026-09-09T11:28:23.1394+00:00"
+  },
+  {
+    "id": "7ded3008-25e8-4887-9380-031baf7c9b00",
+    "title": "Quality Focused",
+    "subtitle": "Strict Ayurvedic standards",
+    "icon_name": "Award",
+    "is_active": true,
+    "sort_order": 5,
+    "created_at": "2026-09-09T11:28:23.1394+00:00"
+  },
+  {
+    "id": "6dfdda19-079d-4524-b917-cbfc6ce56ef0",
+    "title": "People Centred",
+    "subtitle": "Personalized healing plans",
+    "icon_name": "Users",
+    "is_active": true,
+    "sort_order": 6,
+    "created_at": "2026-09-09T11:28:23.1394+00:00"
+  },
+  {
+    "id": "2c192c18-8439-403b-811c-0b2c664ea5e2",
+    "title": "Community Care",
+    "subtitle": "Holistic family wellness",
+    "icon_name": "Trees",
+    "is_active": true,
+    "sort_order": 7,
+    "created_at": "2026-09-09T11:28:23.1394+00:00"
+  }
+]

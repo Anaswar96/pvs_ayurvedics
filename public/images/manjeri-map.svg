@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="100%" height="100%">
+    <defs>
+      <linearGradient id="mapBg" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#E8F4EC" />
+        <stop offset="100%" stop-color="#D7EADF" />
+      </linearGradient>
+    </defs>
+    <rect width="600" height="400" rx="16" fill="url(#mapBg)"/>
+    <!-- Map Grid Roads -->
+    <path d="M 50 180 L 550 210" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round"/>
+    <path d="M 280 50 L 320 350" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round"/>
+    <path d="M 100 80 Q 250 120 450 60" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+    <path d="M 120 320 Q 300 260 520 330" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round"/>
+
+    <!-- River Chaliyar / Kadalundi branch tint -->
+    <path d="M 0 300 Q 200 240 400 370 L 600 350" stroke="#B2DFDB" stroke-width="16" fill="none" opacity="0.7"/>
+
+    <!-- Pin Marker at Manjeri -->
+    <g transform="translate(300, 170)">
+      <!-- Pulsing Ring -->
+      <circle cx="0" cy="0" r="30" fill="#2E7D32" opacity="0.2"/>
+      <circle cx="0" cy="0" r="18" fill="#1B5E20" opacity="0.4"/>
+      <!-- Pin Icon -->
+      <path d="M 0 -32 C -16 -32, -24 -18, 0 8 C 24 -18, 16 -32, 0 -32 Z" fill="#C62828"/>
+      <circle cx="0" cy="-18" r="7" fill="#FFFFFF"/>
+    </g>
+
+    <!-- Location Label Card -->
+    <g transform="translate(230, 240)">
+      <rect x="0" y="0" width="160" height="42" rx="8" fill="#FFFFFF" filter="drop-shadow(0 4px 8px rgba(0,0,0,0.12))"/>
+      <text x="80" y="18" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0D3B27" text-anchor="middle">PVS Ayurvedics</text>
+      <text x="80" y="32" font-family="sans-serif" font-size="10" fill="#555555" text-anchor="middle">Manjeri, Malappuram</text>
+    </g>
+  </svg>

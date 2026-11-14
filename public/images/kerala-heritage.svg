@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+    <defs>
+      <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#E0F2F1" />
+        <stop offset="100%" stop-color="#FFF8E1" />
+      </linearGradient>
+      <linearGradient id="roofGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#A04000" />
+        <stop offset="100%" stop-color="#5B2C05" />
+      </linearGradient>
+    </defs>
+    <rect width="800" height="500" rx="20" fill="url(#skyGrad)"/>
+
+    <!-- Kerala Nalukettu / Traditional House Outline -->
+    <!-- Lush Coconut Palms in Background -->
+    <path d="M 120 220 Q 80 140 140 80 Q 200 130 180 220" fill="#2E7D32" opacity="0.7"/>
+    <path d="M 680 200 Q 640 120 700 60 Q 760 110 740 200" fill="#2E7D32" opacity="0.7"/>
+    
+    <!-- Traditional Kerala Roof Gable -->
+    <polygon points="400,120 250,220 550,220" fill="url(#roofGrad)"/>
+    <polygon points="400,105 230,225 570,225" fill="none" stroke="#D35400" stroke-width="4"/>
+    <!-- Wooden Pillars & Verandah -->
+    <rect x="270" y="220" width="260" height="150" fill="#FFFBF0" stroke="#795548" stroke-width="3"/>
+    <rect x="300" y="220" width="16" height="150" fill="#5D4037"/>
+    <rect x="390" y="220" width="16" height="150" fill="#5D4037"/>
+    <rect x="480" y="220" width="16" height="150" fill="#5D4037"/>
+    <!-- Traditional Hanging Brass Bell/Lamp (Nilavilakku) -->
+    <ellipse cx="400" cy="380" rx="30" ry="10" fill="#B8860B"/>
+    <line x1="400" y1="340" x2="400" y2="380" stroke="#B8860B" stroke-width="4"/>
+    <polygon points="390,340 410,340 400,320" fill="#FF9800"/>
+
+    <!-- Calming Green Lawn & Tropical Garden -->
+    <rect x="0" y="370" width="800" height="130" rx="0" fill="#1B4D2E"/>
+    <path d="M 50 420 C 150 380, 250 440, 350 400" stroke="#2E7D32" stroke-width="6" fill="none"/>
+  </svg>

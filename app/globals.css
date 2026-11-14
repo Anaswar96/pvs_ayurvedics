@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --primary: #0d3b27;
+    --primary-light: #165b33;
+    --primary-dark: #072517;
+    --primary-accent: #2e7d32;
+    --gold: #b38f4d;
+    --gold-light: #dfba73;
+    --gold-dark: #8b6508;
+    --cream: #fcfbf7;
+    --cream-alt: #f7f5ef;
+    --cream-dark: #f0ebe1;
+    --text-main: #1c2a22;
+    --text-muted: #5c6e64;
+    --border-color: #e5ede7;
+    --card-bg: #ffffff;
+  }
+
+  body {
+    background-color: var(--cream);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Plus Jakarta Sans", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .font-serif-ayur {
+    font-family: "Playfair Display", "Cinzel", "Georgia", "Noto Serif Malayalam", serif;
+  }
+}
+
+/* Custom Ayurvedic utility classes */
+.bg-ayur-cream {
+  background-color: #fcfbf7;
+}
+
+.bg-ayur-cream-alt {
+  background-color: #f7f5ef;
+}
+
+.bg-ayur-green {
+  background-color: #0d3b27;
+}
+
+.bg-ayur-green-light {
+  background-color: #165b33;
+}
+
+.bg-ayur-sage {
+  background-color: #e8f5e9;
+}
+
+.text-ayur-green {
+  color: #0d3b27;
+}
+
+.text-ayur-gold {
+  color: #b38f4d;
+}
+
+.border-ayur-green {
+  border-color: #0d3b27;
+}
+
+.border-ayur-border {
+  border-color: #e2ebe4;
+}
+
+/* Luxury Card & Glassmorphism styles */
+.ayur-card {
+  background: #ffffff;
+  border: 1px solid #e7eee9;
+  border-radius: 1rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ayur-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 30px -10px rgba(13, 59, 39, 0.08);
+  border-color: #c8decb;
+}
+
+.ayur-glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.ayur-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Pulse animation for floating WhatsApp */
+@keyframes pulse-subtle {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 10px 25px -5px rgba(37, 211, 102, 0.4);
+  }
+  50% {
+    transform: scale(1.06);
+    box-shadow: 0 15px 35px -5px rgba(37, 211, 102, 0.6);
+  }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 3s infinite ease-in-out;
+}
+
+/* Malayalam font rendering enhancer */
+.malayalam-text {
+  font-family: "Anek Malayalam", "Noto Serif Malayalam", "Manjari", sans-serif;
+  line-height: 1.4;
+}

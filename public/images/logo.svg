@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 380" width="100%" height="100%" fill="none">
+  <!-- Top Arch Halo -->
+  <path d="M 115 150 A 100 100 0 0 1 285 150" stroke="#165B33" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.85"/>
+
+  <!-- Top 3 Botanical Leaves & Person Sprout -->
+  <!-- Top Center Leaf -->
+  <path d="M 200 70 C 190 90, 192 120, 200 135 C 208 120, 210 90, 200 70 Z" fill="#2E7D32"/>
+  <path d="M 200 75 Q 200 110 200 135" stroke="#1B5E20" stroke-width="1.5"/>
+
+  <!-- Top Left Leaf -->
+  <path d="M 200 135 C 180 125, 160 100, 165 90 C 178 88, 198 115, 200 135 Z" fill="#388E3C"/>
+  
+  <!-- Top Right Leaf -->
+  <path d="M 200 135 C 220 125, 240 100, 235 90 C 222 88, 202 115, 200 135 Z" fill="#388E3C"/>
+
+  <!-- Person Head Circle -->
+  <circle cx="200" cy="155" r="12" fill="#1B5E20"/>
+
+  <!-- Central 'V' Leaf Arms -->
+  <!-- Left arm of V (Leaf wing) -->
+  <path d="M 200 255 C 195 210, 150 160, 130 130 C 135 155, 170 215, 200 255 Z" fill="#2E7D32"/>
+  <!-- Right arm of V (Leaf wing) -->
+  <path d="M 200 255 C 205 210, 245 150, 275 145 C 255 175, 215 220, 200 255 Z" fill="#1B5E20"/>
+
+  <!-- Main 'P' (Classic Serif) -->
+  <path d="M 85 165 L 140 165 C 165 165, 175 178, 175 195 C 175 212, 162 225, 138 225 L 115 225 L 115 250 L 145 250 L 145 255 L 75 255 L 75 250 L 95 250 L 95 170 L 85 170 Z M 115 172 L 115 218 L 136 218 C 152 218, 158 208, 158 195 C 158 182, 150 172, 134 172 Z" fill="#0D3B27"/>
+
+  <!-- Main 'S' (Classic Serif) -->
+  <path d="M 320 175 C 315 168, 305 164, 292 164 C 275 164, 260 174, 260 190 C 260 205, 272 212, 290 218 C 312 225, 325 235, 325 250 C 325 268, 308 280, 285 280 C 268 280, 252 272, 245 260 L 255 255 C 262 267, 272 272, 285 272 C 302 272, 312 262, 312 250 C 312 237, 300 230, 282 224 C 262 217, 248 208, 248 190 C 248 174, 262 160, 288 160 C 302 160, 315 165, 324 172 Z" fill="#0D3B27"/>
+
+  <!-- Botanical Leaf Accent in S -->
+  <path d="M 275 240 C 265 242, 245 245, 242 265 C 255 272, 275 260, 275 240 Z" fill="#388E3C"/>
+
+  <!-- Base Mortar and Pestle -->
+  <!-- Pestle handle -->
+  <path d="M 203 260 L 220 248 C 222 246, 224 248, 222 250 L 206 266 Z" fill="#0D3B27"/>
+  <!-- Mortar Bowl -->
+  <path d="M 180 268 C 180 286, 220 286, 220 268 C 215 266, 185 266, 180 268 Z" fill="#0D3B27"/>
+  <!-- Mortar Base Stand -->
+  <path d="M 190 285 L 210 285 L 214 290 L 186 290 Z" fill="#0D3B27"/>
+  <!-- Herbal Sprouts in Mortar -->
+  <path d="M 188 268 C 180 258, 182 248, 196 256 C 193 264, 188 268, 188 268 Z" fill="#2E7D32"/>
+
+  <!-- Divider Accent Lines -->
+  <line x1="65" y1="275" x2="175" y2="275" stroke="#0D3B27" stroke-width="2"/>
+  <line x1="225" y1="275" x2="335" y2="275" stroke="#0D3B27" stroke-width="2"/>
+
+  <!-- Brand Typography: AYURVEDICS -->
+  <text x="200" y="325" font-family="'Cinzel', 'Playfair Display', 'Georgia', serif" font-size="28" font-weight="700" letter-spacing="14" fill="#0D3B27" text-anchor="middle">AYURVEDICS</text>
+</svg>
