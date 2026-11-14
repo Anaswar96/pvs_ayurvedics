@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { getServices, getProducts, getSiteSettings } from "@/lib/supabase/queries";
 import EnquirySection from "@/components/public/EnquirySection";
 import { Stethoscope, Sparkles, Package, Users, CheckCircle2, Calendar, ArrowRight } from "lucide-react";
@@ -61,6 +62,16 @@ export default async function ServicesPage() {
               className="bg-white p-6 sm:p-10 rounded-3xl border border-emerald-900/10 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-center scroll-mt-24"
             >
               <div className="lg:col-span-8 space-y-4">
+                {srv.image_url && (
+                  <div className="relative w-full aspect-[21/9] sm:aspect-[3/1] rounded-2xl overflow-hidden bg-stone-50 border border-stone-200 mb-2">
+                    <Image
+                      src={srv.image_url}
+                      alt={srv.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                )}
                 <div className="flex items-center gap-3.5">
                   <div className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center flex-shrink-0">
                     {getIcon(srv.icon_name)}

@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Leaf, Award, Users, Trees, ShieldCheck, HeartHandshake, MapPin, ArrowRight } from "lucide-react";
-import { getSiteSettings } from "@/lib/supabase/queries";
+import { getSiteSettings, getWebsiteSections } from "@/lib/supabase/queries";
 
 export const metadata = {
   title: "About Us & Our Heritage | PVS Ayurvedics Manjeri Kerala",
@@ -11,7 +11,14 @@ export const metadata = {
 };
 
 export default async function AboutPage() {
-  const settings = await getSiteSettings();
+  const [settings, sections] = await Promise.all([
+    getSiteSettings(),
+    getWebsiteSections(),
+  ]);
+
+  const keralaSection = sections.find((s) => s.section_key === "kerala_story");
+  const aboutSection = sections.find((s) => s.section_key === "our_story");
+  const heritageImage = keralaSection?.image_url || aboutSection?.image_url || "/images/kerala-heritage.svg";
 
   const coreValues = [
     {
@@ -99,7 +106,7 @@ export default async function AboutPage() {
           <div className="lg:col-span-6 relative">
             <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-lg border border-emerald-900/10 bg-ayur-cream group">
               <Image
-                src="/images/kerala-heritage.svg"
+                src={heritageImage}
                 alt="Kerala Traditional Ayurveda Heritage"
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"

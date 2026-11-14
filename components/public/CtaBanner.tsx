@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { WebsiteSection, SiteSettings } from "@/lib/types";
 import { getWhatsAppLink } from "@/lib/utils";
@@ -17,6 +18,7 @@ export default function CtaBanner({ section, settings }: CtaBannerProps) {
     section?.content || "Have a question or need guidance? Our team is here to help.";
   const ctaText = section?.cta_text || "Book a Consultation";
   const ctaUrl = section?.cta_url || "/enquiry";
+  const bgImage = section?.image_url;
   const whatsappUrl =
     section?.secondary_cta_url ||
     getWhatsAppLink(
@@ -26,6 +28,19 @@ export default function CtaBanner({ section, settings }: CtaBannerProps) {
 
   return (
     <div className="bg-[#0f3d24] text-white rounded-3xl p-6 sm:p-8 relative overflow-hidden flex flex-col justify-between h-full min-h-[340px] shadow-lg">
+      {/* Background Image if configured */}
+      {bgImage && (
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={bgImage}
+            alt={title}
+            fill
+            className="object-cover opacity-25"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#092b1d] via-[#092b1d]/80 to-transparent" />
+        </div>
+      )}
+
       {/* Botanical Background Accent */}
       <div className="absolute top-0 right-0 -mr-12 -mt-12 w-48 h-48 rounded-full bg-emerald-500/10 blur-2xl pointer-events-none" />
 

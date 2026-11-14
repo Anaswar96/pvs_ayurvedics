@@ -176,6 +176,334 @@ export function saveSiteSettingsToLocalStore(settings: Partial<SiteSettings>) {
   }
 }
 
+// ---------------- Persisted Services ----------------
+const LOCAL_SERVICES_FILE = path.join(process.cwd(), "lib", ".local-services.json");
+
+function getPersistedServices(): Service[] {
+  try {
+    if (fs.existsSync(LOCAL_SERVICES_FILE)) {
+      const data = fs.readFileSync(LOCAL_SERVICES_FILE, "utf-8");
+      const list = JSON.parse(data);
+      if (Array.isArray(list)) return list;
+    }
+  } catch {
+    // ignore
+  }
+  return [];
+}
+
+function persistServices(list: Service[]) {
+  try {
+    fs.writeFileSync(LOCAL_SERVICES_FILE, JSON.stringify(list, null, 2), "utf-8");
+  } catch {
+    // ignore
+  }
+}
+
+export function saveServiceToLocalStore(service: Service) {
+  const index = localStore.services.findIndex(
+    (s) => s.id === service.id || (service.slug && s.slug === service.slug)
+  );
+  if (index >= 0) {
+    localStore.services[index] = { ...localStore.services[index], ...service };
+  } else {
+    localStore.services.push(service);
+  }
+
+  const persisted = getPersistedServices();
+  const pIdx = persisted.findIndex(
+    (s) => s.id === service.id || (service.slug && s.slug === service.slug)
+  );
+  if (pIdx >= 0) {
+    persisted[pIdx] = { ...persisted[pIdx], ...service };
+  } else {
+    persisted.push(service);
+  }
+  persistServices(persisted);
+}
+
+export function deleteServiceFromLocalStore(idOrSlug: string) {
+  localStore.services = localStore.services.filter(
+    (s) => s.id !== idOrSlug && s.slug !== idOrSlug
+  );
+  const persisted = getPersistedServices().filter(
+    (s) => s.id !== idOrSlug && s.slug !== idOrSlug
+  );
+  persistServices(persisted);
+}
+
+function getAllCombinedServices(dbServices: Service[]): Service[] {
+  const merged = [...dbServices];
+  const diskServices = getPersistedServices();
+  const localList = diskServices.length > 0 ? diskServices : localStore.services;
+
+  for (const ls of localList) {
+    const existingIdx = merged.findIndex((s) => s.id === ls.id || (s.slug && s.slug === ls.slug));
+    if (existingIdx >= 0) {
+      merged[existingIdx] = { ...merged[existingIdx], ...ls };
+    } else {
+      merged.push(ls);
+    }
+  }
+  return merged.length > 0 ? merged : localStore.services;
+}
+
+// ---------------- Persisted Banners ----------------
+const LOCAL_BANNERS_FILE = path.join(process.cwd(), "lib", ".local-banners.json");
+
+function getPersistedBanners(): Banner[] {
+  try {
+    if (fs.existsSync(LOCAL_BANNERS_FILE)) {
+      const data = fs.readFileSync(LOCAL_BANNERS_FILE, "utf-8");
+      const list = JSON.parse(data);
+      if (Array.isArray(list)) return list;
+    }
+  } catch {
+    // ignore
+  }
+  return [];
+}
+
+function persistBanners(list: Banner[]) {
+  try {
+    fs.writeFileSync(LOCAL_BANNERS_FILE, JSON.stringify(list, null, 2), "utf-8");
+  } catch {
+    // ignore
+  }
+}
+
+export function saveBannerToLocalStore(banner: Banner) {
+  const index = localStore.banners.findIndex((b) => b.id === banner.id);
+  if (index >= 0) {
+    localStore.banners[index] = { ...localStore.banners[index], ...banner };
+  } else {
+    localStore.banners.push(banner);
+  }
+
+  const persisted = getPersistedBanners();
+  const pIdx = persisted.findIndex((b) => b.id === banner.id);
+  if (pIdx >= 0) {
+    persisted[pIdx] = { ...persisted[pIdx], ...banner };
+  } else {
+    persisted.push(banner);
+  }
+  persistBanners(persisted);
+}
+
+export function deleteBannerFromLocalStore(id: string) {
+  localStore.banners = localStore.banners.filter((b) => b.id !== id);
+  const persisted = getPersistedBanners().filter((b) => b.id !== id);
+  persistBanners(persisted);
+}
+
+function getAllCombinedBanners(dbBanners: Banner[]): Banner[] {
+  const merged = [...dbBanners];
+  const diskBanners = getPersistedBanners();
+  const localList = diskBanners.length > 0 ? diskBanners : localStore.banners;
+
+  for (const lb of localList) {
+    const existingIdx = merged.findIndex((b) => b.id === lb.id);
+    if (existingIdx >= 0) {
+      merged[existingIdx] = { ...merged[existingIdx], ...lb };
+    } else {
+      merged.push(lb);
+    }
+  }
+  return merged.length > 0 ? merged : localStore.banners;
+}
+
+// ---------------- Persisted Testimonials ----------------
+const LOCAL_TESTIMONIALS_FILE = path.join(process.cwd(), "lib", ".local-testimonials.json");
+
+function getPersistedTestimonials(): Testimonial[] {
+  try {
+    if (fs.existsSync(LOCAL_TESTIMONIALS_FILE)) {
+      const data = fs.readFileSync(LOCAL_TESTIMONIALS_FILE, "utf-8");
+      const list = JSON.parse(data);
+      if (Array.isArray(list)) return list;
+    }
+  } catch {
+    // ignore
+  }
+  return [];
+}
+
+function persistTestimonials(list: Testimonial[]) {
+  try {
+    fs.writeFileSync(LOCAL_TESTIMONIALS_FILE, JSON.stringify(list, null, 2), "utf-8");
+  } catch {
+    // ignore
+  }
+}
+
+export function saveTestimonialToLocalStore(testimonial: Testimonial) {
+  const index = localStore.testimonials.findIndex((t) => t.id === testimonial.id);
+  if (index >= 0) {
+    localStore.testimonials[index] = { ...localStore.testimonials[index], ...testimonial };
+  } else {
+    localStore.testimonials.push(testimonial);
+  }
+
+  const persisted = getPersistedTestimonials();
+  const pIdx = persisted.findIndex((t) => t.id === testimonial.id);
+  if (pIdx >= 0) {
+    persisted[pIdx] = { ...persisted[pIdx], ...testimonial };
+  } else {
+    persisted.push(testimonial);
+  }
+  persistTestimonials(persisted);
+}
+
+export function deleteTestimonialFromLocalStore(id: string) {
+  localStore.testimonials = localStore.testimonials.filter((t) => t.id !== id);
+  const persisted = getPersistedTestimonials().filter((t) => t.id !== id);
+  persistTestimonials(persisted);
+}
+
+function getAllCombinedTestimonials(dbTestimonials: Testimonial[]): Testimonial[] {
+  const merged = [...dbTestimonials];
+  const diskTestimonials = getPersistedTestimonials();
+  const localList = diskTestimonials.length > 0 ? diskTestimonials : localStore.testimonials;
+
+  for (const lt of localList) {
+    const existingIdx = merged.findIndex((t) => t.id === lt.id);
+    if (existingIdx >= 0) {
+      merged[existingIdx] = { ...merged[existingIdx], ...lt };
+    } else {
+      merged.push(lt);
+    }
+  }
+  return merged.length > 0 ? merged : localStore.testimonials;
+}
+
+// ---------------- Persisted Categories ----------------
+const LOCAL_CATEGORIES_FILE = path.join(process.cwd(), "lib", ".local-categories.json");
+
+function getPersistedCategories(): Category[] {
+  try {
+    if (fs.existsSync(LOCAL_CATEGORIES_FILE)) {
+      const data = fs.readFileSync(LOCAL_CATEGORIES_FILE, "utf-8");
+      const list = JSON.parse(data);
+      if (Array.isArray(list)) return list;
+    }
+  } catch {
+    // ignore
+  }
+  return [];
+}
+
+function persistCategories(list: Category[]) {
+  try {
+    fs.writeFileSync(LOCAL_CATEGORIES_FILE, JSON.stringify(list, null, 2), "utf-8");
+  } catch {
+    // ignore
+  }
+}
+
+export function saveCategoryToLocalStore(category: Category) {
+  const index = localStore.categories.findIndex((c) => c.id === category.id || c.slug === category.slug);
+  if (index >= 0) {
+    localStore.categories[index] = { ...localStore.categories[index], ...category };
+  } else {
+    localStore.categories.push(category);
+  }
+
+  const persisted = getPersistedCategories();
+  const pIdx = persisted.findIndex((c) => c.id === category.id || c.slug === category.slug);
+  if (pIdx >= 0) {
+    persisted[pIdx] = { ...persisted[pIdx], ...category };
+  } else {
+    persisted.push(category);
+  }
+  persistCategories(persisted);
+}
+
+export function deleteCategoryFromLocalStore(idOrSlug: string) {
+  localStore.categories = localStore.categories.filter((c) => c.id !== idOrSlug && c.slug !== idOrSlug);
+  const persisted = getPersistedCategories().filter((c) => c.id !== idOrSlug && c.slug !== idOrSlug);
+  persistCategories(persisted);
+}
+
+function getAllCombinedCategories(dbCategories: Category[]): Category[] {
+  const merged = [...dbCategories];
+  const diskCategories = getPersistedCategories();
+  const localList = diskCategories.length > 0 ? diskCategories : localStore.categories;
+
+  for (const lc of localList) {
+    const existingIdx = merged.findIndex((c) => c.id === lc.id || (c.slug && c.slug === lc.slug));
+    if (existingIdx >= 0) {
+      merged[existingIdx] = { ...merged[existingIdx], ...lc };
+    } else {
+      merged.push(lc);
+    }
+  }
+  return merged.length > 0 ? merged : localStore.categories;
+}
+
+// ---------------- Persisted Announcements ----------------
+const LOCAL_ANNOUNCEMENTS_FILE = path.join(process.cwd(), "lib", ".local-announcements.json");
+
+function getPersistedAnnouncements(): Announcement[] {
+  try {
+    if (fs.existsSync(LOCAL_ANNOUNCEMENTS_FILE)) {
+      const data = fs.readFileSync(LOCAL_ANNOUNCEMENTS_FILE, "utf-8");
+      const list = JSON.parse(data);
+      if (Array.isArray(list)) return list;
+    }
+  } catch {
+    // ignore
+  }
+  return [];
+}
+
+function persistAnnouncements(list: Announcement[]) {
+  try {
+    fs.writeFileSync(LOCAL_ANNOUNCEMENTS_FILE, JSON.stringify(list, null, 2), "utf-8");
+  } catch {
+    // ignore
+  }
+}
+
+export function saveAnnouncementToLocalStore(announcement: Announcement) {
+  const index = localStore.announcements.findIndex((a) => a.id === announcement.id);
+  if (index >= 0) {
+    localStore.announcements[index] = { ...localStore.announcements[index], ...announcement };
+  } else {
+    localStore.announcements.push(announcement);
+  }
+
+  const persisted = getPersistedAnnouncements();
+  const pIdx = persisted.findIndex((a) => a.id === announcement.id);
+  if (pIdx >= 0) {
+    persisted[pIdx] = { ...persisted[pIdx], ...announcement };
+  } else {
+    persisted.push(announcement);
+  }
+  persistAnnouncements(persisted);
+}
+
+export function deleteAnnouncementFromLocalStore(id: string) {
+  localStore.announcements = localStore.announcements.filter((a) => a.id !== id);
+  const persisted = getPersistedAnnouncements().filter((a) => a.id !== id);
+  persistAnnouncements(persisted);
+}
+
+function getAllCombinedAnnouncements(dbAnnouncements: Announcement[]): Announcement[] {
+  const merged = [...dbAnnouncements];
+  const diskAnnouncements = getPersistedAnnouncements();
+  const localList = diskAnnouncements.length > 0 ? diskAnnouncements : localStore.announcements;
+
+  for (const la of localList) {
+    const existingIdx = merged.findIndex((a) => a.id === la.id);
+    if (existingIdx >= 0) {
+      merged[existingIdx] = { ...merged[existingIdx], ...la };
+    } else {
+      merged.push(la);
+    }
+  }
+  return merged.length > 0 ? merged : localStore.announcements;
+}
+
 export async function getSiteSettings(): Promise<SiteSettings> {
   let dbSettings: Partial<SiteSettings> = {};
   try {
@@ -280,6 +608,7 @@ export async function getTrustPoints(): Promise<TrustPoint[]> {
 }
 
 export async function getCategories(): Promise<Category[]> {
+  let dbCategories: Category[] = [];
   try {
     const supabase = await createServerSupabaseClient();
     const { data, error } = await supabase
@@ -288,15 +617,16 @@ export async function getCategories(): Promise<Category[]> {
       .eq("is_active", true)
       .order("sort_order", { ascending: true });
     if (!error && data && data.length > 0) {
-      return data as Category[];
+      dbCategories = data as Category[];
     }
   } catch {
     // Fallback gracefully
   }
-  return localStore.categories.filter((c) => c.is_active).sort((a, b) => a.sort_order - b.sort_order);
+  return getAllCombinedCategories(dbCategories).filter((c) => c.is_active).sort((a, b) => a.sort_order - b.sort_order);
 }
 
 export async function getAllCategories(): Promise<Category[]> {
+  let dbCategories: Category[] = [];
   try {
     const supabase = await createServerSupabaseClient();
     const { data, error } = await supabase
@@ -304,12 +634,12 @@ export async function getAllCategories(): Promise<Category[]> {
       .select("*")
       .order("sort_order", { ascending: true });
     if (!error && data && data.length > 0) {
-      return data as Category[];
+      dbCategories = data as Category[];
     }
   } catch {
     // Fallback gracefully
   }
-  return localStore.categories.sort((a, b) => a.sort_order - b.sort_order);
+  return getAllCombinedCategories(dbCategories).sort((a, b) => a.sort_order - b.sort_order);
 }
 
 export async function getProducts(options?: {
@@ -407,6 +737,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 }
 
 export async function getServices(): Promise<Service[]> {
+  let dbServices: Service[] = [];
   try {
     const supabase = await createServerSupabaseClient();
     const { data, error } = await supabase
@@ -415,15 +746,16 @@ export async function getServices(): Promise<Service[]> {
       .eq("is_published", true)
       .order("sort_order", { ascending: true });
     if (!error && data && data.length > 0) {
-      return data as Service[];
+      dbServices = data as Service[];
     }
   } catch {
     // Fallback gracefully
   }
-  return localStore.services.filter((s) => s.is_published).sort((a, b) => a.sort_order - b.sort_order);
+  return getAllCombinedServices(dbServices).filter((s) => s.is_published).sort((a, b) => a.sort_order - b.sort_order);
 }
 
 export async function getAllServicesAdmin(): Promise<Service[]> {
+  let dbServices: Service[] = [];
   try {
     const supabase = await createServerSupabaseClient();
     const { data, error } = await supabase
@@ -431,12 +763,12 @@ export async function getAllServicesAdmin(): Promise<Service[]> {
       .select("*")
       .order("sort_order", { ascending: true });
     if (!error && data && data.length > 0) {
-      return data as Service[];
+      dbServices = data as Service[];
     }
   } catch {
     // Fallback gracefully
   }
-  return localStore.services.sort((a, b) => a.sort_order - b.sort_order);
+  return getAllCombinedServices(dbServices).sort((a, b) => a.sort_order - b.sort_order);
 }
 
 export async function getServiceBySlug(slug: string): Promise<Service | null> {
@@ -454,10 +786,12 @@ export async function getServiceBySlug(slug: string): Promise<Service | null> {
   } catch {
     // Fallback gracefully
   }
-  return localStore.services.find((s) => s.slug === slug) || null;
+  const all = getAllCombinedServices([]);
+  return all.find((s) => s.slug === slug) || null;
 }
 
 export async function getBanners(placement = "home_sidebar"): Promise<Banner[]> {
+  let dbBanners: Banner[] = [];
   try {
     const supabase = await createServerSupabaseClient();
     const { data, error } = await supabase
@@ -467,17 +801,18 @@ export async function getBanners(placement = "home_sidebar"): Promise<Banner[]> 
       .eq("placement", placement)
       .order("sort_order", { ascending: true });
     if (!error && data && data.length > 0) {
-      return data as Banner[];
+      dbBanners = data as Banner[];
     }
   } catch {
     // Fallback gracefully
   }
-  return localStore.banners
+  return getAllCombinedBanners(dbBanners)
     .filter((b) => b.is_active && (!placement || b.placement === placement))
     .sort((a, b) => a.sort_order - b.sort_order);
 }
 
 export async function getAllBannersAdmin(): Promise<Banner[]> {
+  let dbBanners: Banner[] = [];
   try {
     const supabase = await createServerSupabaseClient();
     const { data, error } = await supabase
@@ -485,15 +820,16 @@ export async function getAllBannersAdmin(): Promise<Banner[]> {
       .select("*")
       .order("sort_order", { ascending: true });
     if (!error && data && data.length > 0) {
-      return data as Banner[];
+      dbBanners = data as Banner[];
     }
   } catch {
     // Fallback gracefully
   }
-  return localStore.banners.sort((a, b) => a.sort_order - b.sort_order);
+  return getAllCombinedBanners(dbBanners).sort((a, b) => a.sort_order - b.sort_order);
 }
 
 export async function getAnnouncements(): Promise<Announcement[]> {
+  let dbAnnouncements: Announcement[] = [];
   try {
     const supabase = await createServerSupabaseClient();
     const { data, error } = await supabase
@@ -502,15 +838,16 @@ export async function getAnnouncements(): Promise<Announcement[]> {
       .eq("is_active", true)
       .order("priority", { ascending: true });
     if (!error && data && data.length > 0) {
-      return data as Announcement[];
+      dbAnnouncements = data as Announcement[];
     }
   } catch {
     // Fallback gracefully
   }
-  return localStore.announcements.filter((a) => a.is_active).sort((a, b) => a.priority - b.priority);
+  return getAllCombinedAnnouncements(dbAnnouncements).filter((a) => a.is_active).sort((a, b) => a.priority - b.priority);
 }
 
 export async function getAllAnnouncementsAdmin(): Promise<Announcement[]> {
+  let dbAnnouncements: Announcement[] = [];
   try {
     const supabase = await createServerSupabaseClient();
     const { data, error } = await supabase
@@ -518,15 +855,16 @@ export async function getAllAnnouncementsAdmin(): Promise<Announcement[]> {
       .select("*")
       .order("priority", { ascending: true });
     if (!error && data && data.length > 0) {
-      return data as Announcement[];
+      dbAnnouncements = data as Announcement[];
     }
   } catch {
     // Fallback gracefully
   }
-  return localStore.announcements.sort((a, b) => a.priority - b.priority);
+  return getAllCombinedAnnouncements(dbAnnouncements).sort((a, b) => a.priority - b.priority);
 }
 
 export async function getTestimonials(): Promise<Testimonial[]> {
+  let dbTestimonials: Testimonial[] = [];
   try {
     const supabase = await createServerSupabaseClient();
     const { data, error } = await supabase
@@ -535,15 +873,16 @@ export async function getTestimonials(): Promise<Testimonial[]> {
       .eq("is_published", true)
       .order("sort_order", { ascending: true });
     if (!error && data && data.length > 0) {
-      return data as Testimonial[];
+      dbTestimonials = data as Testimonial[];
     }
   } catch {
     // Fallback gracefully
   }
-  return localStore.testimonials.filter((t) => t.is_published).sort((a, b) => a.sort_order - b.sort_order);
+  return getAllCombinedTestimonials(dbTestimonials).filter((t) => t.is_published).sort((a, b) => a.sort_order - b.sort_order);
 }
 
 export async function getAllTestimonialsAdmin(): Promise<Testimonial[]> {
+  let dbTestimonials: Testimonial[] = [];
   try {
     const supabase = await createServerSupabaseClient();
     const { data, error } = await supabase
@@ -551,12 +890,12 @@ export async function getAllTestimonialsAdmin(): Promise<Testimonial[]> {
       .select("*")
       .order("sort_order", { ascending: true });
     if (!error && data && data.length > 0) {
-      return data as Testimonial[];
+      dbTestimonials = data as Testimonial[];
     }
   } catch {
     // Fallback gracefully
   }
-  return localStore.testimonials.sort((a, b) => a.sort_order - b.sort_order);
+  return getAllCombinedTestimonials(dbTestimonials).sort((a, b) => a.sort_order - b.sort_order);
 }
 
 export async function getNavigationItems(): Promise<NavigationItem[]> {

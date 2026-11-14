@@ -65,7 +65,7 @@ export default function Footer({ settings }: FooterProps) {
           
           {/* Col 1: Brand & Malayalam Tagline */}
           <div className="lg:col-span-4 space-y-4">
-            <Logo variant="light" height={60} />
+            <Logo variant="light" height={60} logoUrl={settings.logo_url} />
             
             <p className="text-sm font-semibold text-emerald-200 malayalam-text">
               {settings.malayalam_headline || "ആരോഗ്യത്തിന് ആയുർവേദത്തിന്റെ കരുതൽ"}

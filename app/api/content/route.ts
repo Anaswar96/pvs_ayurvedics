@@ -88,9 +88,13 @@ export async function POST(req: NextRequest) {
       saveTrustPointsToLocalStore(trustPoints);
     }
 
-    // Purge caches on home and content manager
+    // Purge caches across public pages and content manager
     try {
       revalidatePath("/");
+      revalidatePath("/about");
+      revalidatePath("/services");
+      revalidatePath("/contact");
+      revalidatePath("/enquiry");
       revalidatePath("/admin/content");
     } catch {
       // Non-fatal if called without request store

@@ -89,7 +89,7 @@ export default function Header({ settings, navigationItems }: HeaderProps) {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex-shrink-0 py-1 ml-4 sm:ml-6 lg:ml-10">
-              <Logo height={56} />
+              <Logo height={56} logoUrl={settings.logo_url} />
             </div>
 
             {/* Desktop Navigation Links */}
@@ -217,7 +217,7 @@ export default function Header({ settings, navigationItems }: HeaderProps) {
           {/* Drawer Content */}
           <div className="relative ml-auto w-4/5 max-w-xs bg-white h-full shadow-2xl flex flex-col z-10 animate-in slide-in-from-right duration-300">
             <div className="p-4 border-b border-stone-100 flex items-center justify-between">
-              <Logo height={44} />
+              <Logo height={44} logoUrl={settings.logo_url} />
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(false)}

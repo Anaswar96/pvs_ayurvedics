@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import {
   Save,
   Check,
@@ -14,6 +15,7 @@ import {
   EyeOff,
   AlertCircle,
   Loader2,
+  Upload,
 } from "lucide-react";
 import { SiteSettings } from "@/lib/types";
 import { getWhatsAppLink } from "@/lib/utils";
@@ -25,6 +27,7 @@ interface SettingsManagerProps {
 export default function SettingsManager({ initialSettings }: SettingsManagerProps) {
   const [settings, setSettings] = useState<SiteSettings>({
     ...initialSettings,
+    logo_url: initialSettings.logo_url || "/images/logo.png",
     whatsapp_sticky_enabled:
       initialSettings.whatsapp_sticky_enabled !== undefined
         ? initialSettings.whatsapp_sticky_enabled
@@ -36,11 +39,36 @@ export default function SettingsManager({ initialSettings }: SettingsManagerProp
   });
 
   const [isSaving, setIsSaving] = useState(false);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleFieldChange = (field: keyof SiteSettings, value: unknown) => {
     setSettings((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingLogo(true);
+    const data = new FormData();
+    data.append("file", file);
+    data.append("folder", "pvs-ayurvedics/branding");
+
+    try {
+      const res = await fetch("/api/upload", { method: "POST", body: data });
+      const json = await res.json();
+      if (res.ok && json.url) {
+        handleFieldChange("logo_url", json.url);
+      } else {
+        setErrorMessage(json.error || "Failed to upload logo.");
+      }
+    } catch {
+      setErrorMessage("Network error uploading logo.");
+    } finally {
+      setUploadingLogo(false);
+    }
   };
 
   const handleSave = async (e?: React.FormEvent) => {
@@ -293,11 +321,87 @@ export default function SettingsManager({ initialSettings }: SettingsManagerProp
         {/* ========================================================================= */}
         {/* CLINIC IDENTITY & TAGLINES */}
         {/* ========================================================================= */}
-        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 shadow-2xs space-y-4 text-xs">
-          <h3 className="text-base font-bold font-serif-ayur text-[#0d3b27] flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-emerald-700" />
-            <span>Clinic Identity &amp; Taglines</span>
-          </h3>
+        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 shadow-2xs space-y-6 text-xs">
+          <div className="flex items-center justify-between border-b border-stone-100 pb-4">
+            <h3 className="text-base font-bold font-serif-ayur text-[#0d3b27] flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-emerald-700" />
+              <span>Clinic Identity &amp; Branding</span>
+            </h3>
+            <span className="text-[11px] text-stone-400">Controls Header, Drawer, Footer &amp; Tab identity</span>
+          </div>
+
+          {/* Clinic Logo Management */}
+          <div className="p-4 sm:p-5 rounded-2xl bg-stone-50 border border-stone-200/80 space-y-4">
+            <label className="block font-bold text-stone-800">
+              Clinic Logo (Header &amp; Footer Branding)
+            </label>
+            <div className="flex flex-col sm:flex-row items-center gap-6">
+              {/* Preview Box with Dark/Light Checker or Forest Background for preview */}
+              <div className="relative w-28 h-28 rounded-2xl border-2 border-dashed border-stone-300 bg-white shadow-xs p-2 flex items-center justify-center shrink-0 overflow-hidden">
+                {settings.logo_url ? (
+                  <Image
+                    src={settings.logo_url}
+                    alt="Clinic Logo Preview"
+                    width={100}
+                    height={100}
+                    className="max-h-full max-w-full object-contain"
+                    unoptimized
+                  />
+                ) : (
+                  <span className="text-stone-400 text-[10px] text-center">No Logo Set</span>
+                )}
+              </div>
+
+              <div className="space-y-3 flex-1 w-full">
+                <div className="flex flex-wrap items-center gap-2">
+                  <label className="inline-flex items-center gap-2 px-4 py-2 bg-[#0d3b27] text-white rounded-xl text-xs font-semibold cursor-pointer hover:bg-[#165b33] transition-all shadow-xs">
+                    {uploadingLogo ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        <span>Uploading Logo...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Upload className="w-3.5 h-3.5" />
+                        <span>Upload New Logo</span>
+                      </>
+                    )}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleLogoUpload}
+                      disabled={uploadingLogo}
+                    />
+                  </label>
+
+                  {settings.logo_url !== "/images/logo.png" && (
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange("logo_url", "/images/logo.png")}
+                      className="px-3 py-2 bg-stone-200 text-stone-700 rounded-xl text-xs font-medium hover:bg-stone-300 transition-colors"
+                    >
+                      Reset to Default Logo
+                    </button>
+                  )}
+                </div>
+
+                <div className="space-y-1">
+                  <label className="block text-[11px] text-stone-500">Logo Image URL</label>
+                  <input
+                    type="text"
+                    value={settings.logo_url || ""}
+                    onChange={(e) => handleFieldChange("logo_url", e.target.value)}
+                    placeholder="/images/logo.png or Cloudinary HTTPS URL"
+                    className="w-full px-3 py-2 bg-white border border-stone-200 rounded-xl text-stone-800 text-xs font-mono focus:outline-none focus:border-emerald-500"
+                  />
+                  <p className="text-[10px] text-stone-400">
+                    Recommended: Transparent PNG or SVG with good contrast against both dark (#0d3b27) and light backgrounds.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>

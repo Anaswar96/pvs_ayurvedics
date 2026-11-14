@@ -8,6 +8,7 @@ interface LogoProps {
   width?: number;
   height?: number;
   showText?: boolean;
+  logoUrl?: string;
 }
 
 export default function Logo({
@@ -15,8 +16,10 @@ export default function Logo({
   className = "",
   width,
   height = 54,
+  logoUrl,
 }: LogoProps) {
-  const logoSrc = variant === "light" ? "/images/logo-white.png" : "/images/logo.png";
+  const defaultFallback = variant === "light" ? "/images/logo-white.png" : "/images/logo.png";
+  const logoSrc = logoUrl && logoUrl.trim() !== "" ? logoUrl : defaultFallback;
   // Actual logo aspect ratio is ~1.1514 (943 / 819)
   const renderedWidth = width ?? Math.round(height * 1.1514);
 

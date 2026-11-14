@@ -4,11 +4,12 @@ import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Leaf, ShieldCheck, HeartHandshake, MapPin } from "lucide-react";
-import { WebsiteSection, TrustPoint } from "@/lib/types";
+import { WebsiteSection, TrustPoint, SiteSettings } from "@/lib/types";
 
 interface HeroSectionProps {
   section?: WebsiteSection;
   trustPoints: TrustPoint[];
+  settings?: SiteSettings;
 }
 
 interface BannerSlide {
@@ -121,6 +122,33 @@ export default function HeroSection({ section, trustPoints }: HeroSectionProps) 
                 sizes="100vw"
                 className="object-cover object-center transition-transform duration-1000 ease-out"
               />
+              {/* Optional Text Overlay if admin specifies title/content */}
+              {section?.title && section.title.trim() !== "" && (
+                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent flex items-center">
+                  <div className="max-w-[1440px] mx-auto px-6 sm:px-12 w-full text-white space-y-3 pointer-events-none">
+                    {section.subtitle && (
+                      <span className="inline-block px-3 py-1 rounded-full bg-emerald-800/90 text-white text-[11px] font-bold tracking-wider uppercase border border-emerald-500/30">
+                        {section.subtitle}
+                      </span>
+                    )}
+                    <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold font-serif-ayur max-w-xl leading-tight text-white drop-shadow-md">
+                      {section.title}
+                    </h1>
+                    {section.content && (
+                      <p className="text-xs sm:text-sm md:text-base text-stone-200 max-w-lg line-clamp-3 drop-shadow">
+                        {section.content}
+                      </p>
+                    )}
+                    {section.cta_text && (
+                      <div className="pt-2">
+                        <span className="inline-block px-5 py-2.5 rounded-full bg-[#0d3b27] text-white text-xs sm:text-sm font-semibold shadow-lg border border-emerald-400/30">
+                          {section.cta_text}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           );
 

@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Stethoscope, Sparkles, Package, Users, ArrowRight } from "lucide-react";
 import { Service, WebsiteSection } from "@/lib/types";
 
@@ -50,9 +51,20 @@ export default function ServicesSection({ section, services }: ServicesSectionPr
               className="ayur-card p-6 flex flex-col justify-between hover:border-emerald-700/30 transition-all duration-300"
             >
               <div>
-                <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center mb-4">
-                  {getServiceIcon(srv.icon_name)}
-                </div>
+                {srv.image_url ? (
+                  <div className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden bg-stone-50 border border-stone-100 mb-4">
+                    <Image
+                      src={srv.image_url}
+                      alt={srv.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center mb-4">
+                    {getServiceIcon(srv.icon_name)}
+                  </div>
+                )}
 
                 <h3 className="text-lg font-bold text-[#0d3b27] font-serif-ayur mb-2">
                   {srv.title}

@@ -33,14 +33,8 @@ export default function AdminSidebar({
   const pathname = usePathname();
   const router = useRouter();
 
-  const navItems = [
+  const primaryNavItems = [
     { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
-    { label: "Products", href: "/admin/products", icon: Package },
-    { label: "Categories", href: "/admin/categories", icon: Layers },
-    { label: "Banners", href: "/admin/banners", icon: ImageIcon },
-    { label: "Announcements", href: "/admin/announcements", icon: Megaphone },
-    { label: "Services", href: "/admin/services", icon: Stethoscope },
-    { label: "Testimonials", href: "/admin/testimonials", icon: MessageSquareQuote },
     {
       label: "Enquiries",
       href: "/admin/enquiries",
@@ -48,7 +42,16 @@ export default function AdminSidebar({
       badge: newEnquiriesCount > 0 ? newEnquiriesCount : undefined,
     },
     { label: "Website Content", href: "/admin/content", icon: FileEdit },
-    { label: "Site Settings", href: "/admin/settings", icon: Settings },
+    { label: "Clinic Settings", href: "/admin/settings", icon: Settings },
+  ];
+
+  const quickLinks = [
+    { label: "Herbal Products", href: "/admin/products", icon: Package },
+    { label: "Categories", href: "/admin/categories", icon: Layers },
+    { label: "Treatments & Services", href: "/admin/services", icon: Stethoscope },
+    { label: "Promotional Banners", href: "/admin/banners", icon: ImageIcon },
+    { label: "Announcements", href: "/admin/announcements", icon: Megaphone },
+    { label: "Patient Testimonials", href: "/admin/testimonials", icon: MessageSquareQuote },
     { label: "Media Library", href: "/admin/media", icon: Images },
   ];
 
@@ -76,43 +79,76 @@ export default function AdminSidebar({
       </div>
 
       {/* Navigation List */}
-      <div className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
-        <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-emerald-400/60">
-          Management
+      <div className="flex-1 overflow-y-auto py-4 px-3 space-y-4">
+        {/* Core Pillars */}
+        <div className="space-y-1">
+          <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-emerald-400/60">
+            Core Controls
+          </div>
+
+          {primaryNavItems.map((item) => {
+            const isActive =
+              item.href === "/admin"
+                ? pathname === "/admin"
+                : pathname.startsWith(item.href);
+
+            const IconComp = item.icon;
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={onCloseMobile}
+                className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 ${
+                  isActive
+                    ? "bg-emerald-700/80 text-white shadow-xs border border-emerald-600/40"
+                    : "text-emerald-200/80 hover:bg-emerald-900/50 hover:text-white"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <IconComp className={`w-4 h-4 ${isActive ? "text-amber-300" : "text-emerald-400"}`} />
+                  <span>{item.label}</span>
+                </div>
+
+                {item.badge !== undefined && item.badge > 0 && (
+                  <span className="px-2 py-0.5 rounded-full bg-amber-400 text-emerald-950 text-[10px] font-bold">
+                    {item.badge}
+                  </span>
+                )}
+              </Link>
+            );
+          })}
         </div>
 
-        {navItems.map((item) => {
-          const isActive =
-            item.href === "/admin"
-              ? pathname === "/admin"
-              : pathname.startsWith(item.href);
+        {/* Quick Management Shortcuts */}
+        <div className="space-y-1 pt-2 border-t border-emerald-900/40">
+          <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-emerald-400/60">
+            Inventory &amp; Modules
+          </div>
 
-          const IconComp = item.icon;
+          {quickLinks.map((item) => {
+            const isActive = pathname.startsWith(item.href);
+            const IconComp = item.icon;
 
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={onCloseMobile}
-              className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 ${
-                isActive
-                  ? "bg-emerald-800 text-white shadow-sm"
-                  : "text-emerald-200/80 hover:bg-emerald-900/50 hover:text-white"
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <IconComp className={`w-4 h-4 ${isActive ? "text-white" : "text-emerald-400"}`} />
-                <span>{item.label}</span>
-              </div>
-
-              {item.badge !== undefined && item.badge > 0 && (
-                <span className="px-2 py-0.5 rounded-full bg-amber-400 text-emerald-950 text-[10px] font-bold">
-                  {item.badge}
-                </span>
-              )}
-            </Link>
-          );
-        })}
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={onCloseMobile}
+                className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all duration-200 ${
+                  isActive
+                    ? "bg-emerald-800 text-white font-semibold"
+                    : "text-emerald-300/70 hover:bg-emerald-900/40 hover:text-emerald-100"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <IconComp className={`w-3.5 h-3.5 ${isActive ? "text-emerald-300" : "text-emerald-400/70"}`} />
+                  <span>{item.label}</span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
       </div>
 
       {/* Footer Quick Links & Logout */}

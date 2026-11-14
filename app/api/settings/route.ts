@@ -28,6 +28,8 @@ export async function POST(req: NextRequest) {
         email: body.email || "",
         address: body.address || "",
         working_hours: body.working_hours || "",
+        logo_url: body.logo_url || "/images/logo.png",
+        favicon_url: body.favicon_url || "/favicon.ico",
         google_map_embed_url: body.google_map_embed_url || "",
         google_map_directions_url: body.google_map_directions_url || "",
         facebook_url: body.facebook_url || "",
